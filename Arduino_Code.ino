@@ -1,12 +1,11 @@
 
-#define trigPin 6                       //Define the HC-SE04 triger on pin 6 on the arduino
+#define trigPin 6                       //Define the HC-SE04 trigger on pin 6 on the arduino
 #define echoPin 5                       //Define the HC-SE04 echo on pin 5 on the arduino
 
 #include<SoftwareSerial.h>
-SoftwareSerial BT(10, 11); // Connect Tx to pin 10 and Rx to pin 11 of HC-05/HC-06
+SoftwareSerial BT(10, 11); // Connect Tx to pin 10 and Rx to pin 11 of HC-05/HC-06 Bluetooth Module
 String readData;          // String for storing data send from the Bluetooth device
-String temp;
-int relay = 7;
+int relay = 7;            //From Relay module to pin 7 of Arduino
 bool listenToBluetooth = false;
 
 int val2 = 0;
@@ -29,13 +28,14 @@ void loop()
 
 {
 
-  int duration, distance;             //Define two intregers duration and distance to be used to save data
+  int duration, distance;             //Define two intregers duration and distance to save data
   digitalWrite(6, HIGH);        //write a digital high to the trigpin to send out the pulse
   delay(50);             //wait half a millisecond
   digitalWrite(6, LOW);         //turn off the trigpin
   duration = pulseIn(5, HIGH);  //measure the time using pulsein when the echo receives a signal set it to high
-  distance = (duration / 2) / 29.1;   //distance is the duration divided by 2 becasue the signal traveled from the trigpin then back to the echo pin, then devide by 29.1 to convert to centimeters
-
+  distance = (duration / 2) / 29.1;   //distance is the duration divided by 2
+  
+  //Read data coming from HC-04 Bluetooth Module
   while (BT.available())
   {
     delay(50);
